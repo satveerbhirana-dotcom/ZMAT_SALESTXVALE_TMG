@@ -1,0 +1,5 @@
+@ObjectModel.leadingEntity.name: 'ZI_SalesTaxConditionVa_S'
+define service ZUI_SALESTAXCONDITIONVA {
+  expose ZI_SALESTAXCONDITIONVA_S as SalesTaxConditioAll;
+  expose ZI_SALESTAXCONDITIONVA as SalesTaxConditionVa;
+}

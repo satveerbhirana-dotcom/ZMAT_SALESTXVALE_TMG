@@ -1,0 +1,78 @@
+managed with additional save implementation in class ZBP_I_SALESTAXCONDITIONVA_S unique;
+strict;
+with draft;
+define behavior for ZI_SalesTaxConditionVa_S alias SalesTaxConditioAll
+draft table ZMAT_SALEST_D_S
+with unmanaged save
+lock master total etag LastChangedAtMax
+authorization master( global )
+
+{
+  field ( readonly )
+   SingletonID;
+
+  field ( features : instance )
+   TransportRequestID;
+
+  field ( notrigger )
+   SingletonID,
+   LastChangedAtMax;
+
+
+  update;
+  internal create;
+  internal delete;
+
+  draft action ( features : instance ) Edit with additional implementation;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+  action ( features : instance ) SelectCustomizingTransptReq parameter D_SelectCustomizingTransptReqP result [1] $self;
+
+  association _SalesTaxConditionVa { create ( features : instance ); with draft; }
+
+  side effects {
+    action SelectCustomizingTransptReq affects $self;
+  }
+  }
+
+define behavior for ZI_SalesTaxConditionVa alias SalesTaxConditionVa ##UNMAPPED_FIELD
+persistent table ZMAT_SALESTXVALE
+draft table ZMAT_SALESTXV_D
+lock dependent by _SalesTaxConditioAll
+authorization dependent by _SalesTaxConditioAll
+
+{
+  field ( mandatory : create )
+   Country,
+   TaxType,
+   TaxCategory;
+
+  field ( readonly )
+   SingletonID;
+
+  field ( readonly : update )
+   Country,
+   TaxType,
+   TaxCategory;
+
+  field ( notrigger )
+   SingletonID;
+
+
+  update( features : global );
+  delete( features : global );
+
+  mapping for ZMAT_SALESTXVALE
+  {
+    Country = COUNTRY;
+    TaxType = TAX_TYPE;
+    TaxCategory = TAX_CATEGORY;
+    Value = VALUE;
+  }
+
+  association _SalesTaxConditioAll { with draft; }
+
+  validation ValidateTransportRequest on save ##NOT_ASSIGNED_TO_DETACT { create; update; delete; }
+}

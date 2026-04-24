@@ -1,0 +1,61 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'SalesTaxConditionVa', 
+    typeNamePlural: 'SalesTaxConditionVas', 
+    title: {
+      type: #STANDARD, 
+      label: 'Sales Tax Condition Values', 
+      value: 'Country'
+    }
+  }
+}
+annotate view ZI_SalesTaxConditionVa with
+{
+  @UI.identification: [ {
+    position: 1,
+     label: 'Departure Country/Region (from which the goods are sent)' 
+  } ]
+  @UI.lineItem: [ {
+    position: 1 ,
+     label: 'Departure Country/Region (from which the goods are sent)'
+  } ]
+  @UI.facet: [ {
+    id: 'ZI_SalesTaxConditionVa', 
+    purpose: #STANDARD, 
+    type: #IDENTIFICATION_REFERENCE, 
+    label: 'Sales Tax Condition Values', 
+    position: 1 
+  } ]
+  Country;
+  
+  @UI.identification: [ {
+    position: 2 ,
+     label: 'Tax Type'
+  } ]
+  @UI.lineItem: [ {
+    position: 2 ,
+     label: 'Tax Type'
+  } ]
+  TaxType;
+  
+  @UI.identification: [ {
+    position: 3 ,
+     label: 'Tax category (sales tax, federal sales tax,...)'
+  } ]
+  @UI.lineItem: [ {
+    position: 3 ,
+     label: 'Tax category (sales tax, federal sales tax,...)'
+  } ]
+  TaxCategory;
+  
+  @UI.identification: [ {
+    position: 4 , 
+    label: 'Tax classification material'
+  } ]
+  @UI.lineItem: [ {
+    position: 4 , 
+    label: 'Tax classification material'
+  } ]
+  Value;
+}
